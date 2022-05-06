@@ -1,0 +1,59 @@
+.container {
+    margin: 30px;
+}
+
+.search-container{
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+}
+
+
+.search-input {
+    margin-left: 5px;
+    border: 0;
+    outline: none;
+    border-bottom: 1px solid #000;
+}
+
+.search-msg {
+    font-size: 14px;
+    color: #f00;
+}
+
+.res-container{
+    width: 140px;
+    display: flex;
+    align-items: center;
+    padding: 4px 10px;
+    border: 1px solid #000;
+    border-radius: 5px;
+    background: #fdf7f7;
+}
+
+.logo{
+    width: 40px;
+    height: 40px;
+    margin-right: 5px;
+}
+
+.progress {
+    width:120px;
+    height:22px;
+    border-radius: 20px;
+    color: #514b82;
+    border:2px solid;
+    position: relative;
+}
+.progress::before {
+    content:"";
+    position: absolute;
+    margin:2px;
+    inset:0 100% 0 0;
+    border-radius: inherit;
+    background: #514b82;
+    animation:p6 2s infinite;
+}
+@keyframes p6 {
+    100% {inset:0}
+}
