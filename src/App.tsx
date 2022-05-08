@@ -2,6 +2,7 @@ import { useState, useEffect, ChangeEvent } from 'react';
 import debounce from 'lodash/debounce';
 import { isQQ } from './utils/util';
 import request from './utils/request';
+import Index from './component/Card';
 import './App.css';
 
 const API = 'https://api.uomg.com/api/qq.info';
@@ -16,6 +17,7 @@ interface ResObj {
 function App() {
 
     const [ query, setQuery ] = useState<string>('');
+    const [ inputVal, setInputVal ] = useState<string>('');
     const [ res, setRes ] = useState<ResObj>({});
     const [ error, setError ] = useState<string>('');
     const [ loading, setLoading ] = useState<boolean>(false);
@@ -39,9 +41,11 @@ function App() {
     }, [ query ]);
 
     const handleInput = (ev: ChangeEvent<HTMLInputElement>) => {
+        const val = ev.target.value;
         setRes({});
         setError('');
-        setQuery(ev.target.value.trim())
+        setInputVal(val);
+        debounce(() => setQuery(val.trim()), 800)()
     };
 
     return (
@@ -49,17 +53,11 @@ function App() {
             <h1>QQ号查询</h1>
             <section className="search-container">
                 <span>QQ</span>
-                <input type="text" className="search-input"  onChange={debounce(handleInput, 800)} />
+                <input type="text" className="search-input" value={inputVal} onChange={handleInput} />
                 {error && <span className="search-msg">{error}</span>}
             </section>
             {!loading ?
-                (res.qq && <div className="res-container">
-                    <img className="logo" src={res.qlogo} alt={res.name} />
-                    <div className="content">
-                        <div className="name">{res.name}</div>
-                        <div className="code">{res.qq}</div>
-                    </div>
-                </div>)
+                (res.qq && <Index cardInfo={res}/>)
                 :
                 <div className="progress"></div>}
         </div>
